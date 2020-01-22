@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ColumnMetaData } from '../models/column-meta-data';
 
 @Component({
   selector: 'app-collection-view-component',
@@ -7,7 +8,26 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CollectionViewComponentComponent implements OnInit {
 
-  constructor() { }
+  private rawJSON: string;
+  private collectionData: any[]|null;
+  private collectionMetaData: ColumnMetaData[];
+  private message: string;
+
+  constructor() {
+  }
+
+  onParseCollectionClick() {
+    try
+    {
+      this.collectionData = JSON.parse(this.rawJSON);
+      this.collectionMetaData = Object.keys(this.collectionData[0])
+          .map(key => ({ name: key, type: 'string' }));
+    }
+    catch(exception)
+    {
+      this.message = exception.message;
+    }
+  }
 
   ngOnInit() {
   }

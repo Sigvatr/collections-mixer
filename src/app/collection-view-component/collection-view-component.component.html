@@ -1,4 +1,24 @@
-<textarea placeholder="Please provide the JSON array with objects">
-</textarea>
+<div *ngIf="collectionData == null; then thenBlock else elseBlock"></div>
+<div>
+</div>
+<ng-template #thenBlock>
+    <span *ngIf="message != null">{{ message }}</span>
+    <textarea
+        [(ngModel)]="rawJSON" 
+        placeholder="Please provide the JSON array with objects">
+    </textarea>
 
-<button>Load data</button>
+    <button (click)="onParseCollectionClick()">Parse data</button>
+</ng-template>
+<ng-template #elseBlock>
+    <table>
+        <tr>
+            <th *ngFor="let key of collectionMetaData">{{ key.name }}</th>
+        </tr>
+        <tr *ngFor="let datum of collectionData">
+            <td *ngFor="let key of collectionMetaData">
+                {{ datum[key.name] }}
+            </td>
+        </tr>
+    </table>
+</ng-template>
