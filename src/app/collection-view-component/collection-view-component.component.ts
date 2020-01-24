@@ -16,6 +16,9 @@ export class CollectionViewComponentComponent implements OnInit {
   constructor() {
   }
 
+  ngOnInit() {
+  }
+
   onParseCollectionClick() {
     try
     {
@@ -29,7 +32,9 @@ export class CollectionViewComponentComponent implements OnInit {
     }
   }
 
-  ngOnInit() {
+  editData() {
+    this.collectionData = null;
+    this.collectionMetaData = null;
+    this.message = null;
   }
-
 }
