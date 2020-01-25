@@ -1,10 +1,14 @@
 <table>
-    <tr>
-        <th *ngFor="let key of metaData">{{ key.name }}</th>
-    </tr>
-    <tr *ngFor="let datum of data">
-        <td *ngFor="let key of metaData">
-            {{ datum[key.name] }}
-        </td>
-    </tr>
+    <thead>
+        <tr>
+            <th *ngFor="let key of metaData">{{ key.name }}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let datum of data">
+            <td *ngFor="let key of metaData">
+                {{ datum[key.name] }}
+            </td>
+        </tr>
+    </tbody>
 </table>

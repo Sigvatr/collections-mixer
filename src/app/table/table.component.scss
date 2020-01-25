@@ -1,0 +1,30 @@
+table {
+    border-collapse: collapse;
+    border-spacing : 0;
+
+    td, th {
+        padding   : 10px 5px;
+    }
+
+    thead th {
+        background: darkslategray;
+        overflow  : hidden;
+        word-break: normal;
+        color     : white;
+    }
+
+    tbody {
+        tr:nth-child(odd) {
+            background-color: #b8d1f3;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dae5f4;
+        }
+
+        td {
+            overflow  : hidden;
+            word-break: normal;
+        }
+    }
+}

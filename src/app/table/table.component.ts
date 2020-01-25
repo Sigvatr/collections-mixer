@@ -10,7 +10,6 @@ export class TableComponent implements OnInit {
 
   @Input()
   private data: any[];
-
   private metaData: ColumnMetaData[];
   
   constructor() { }

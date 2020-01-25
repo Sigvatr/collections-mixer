@@ -1,4 +1,6 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ColumnMetaData } from '../models/column-meta-data';
+
 
 @Component({
   selector: 'app-collection-wrapper',
@@ -35,5 +37,4 @@ export class CollectionWrapperComponent implements OnInit {
     this.collectionMetaData = null;
     this.message = null;
   }
-
 }
