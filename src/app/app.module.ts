@@ -3,13 +3,15 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { CollectionViewComponentComponent } from './collection-view-component/collection-view-component.component';
+import { TableComponent } from './table/table.component';
 import { FormsModule } from '@angular/forms';
+import { CollectionWrapperComponent } from './collection-wrapper/collection-wrapper.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    CollectionViewComponentComponent
+    TableComponent,
+    CollectionWrapperComponent
   ],
   imports: [
     BrowserModule,
@@ -17,6 +19,8 @@ import { FormsModule } from '@angular/forms';
     FormsModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [
+    AppComponent
+  ]
 })
 export class AppModule { }

@@ -1,20 +1,18 @@
-import { Component, OnInit } from '@angular/core';
-import { ColumnMetaData } from '../models/column-meta-data';
+import { Component, OnInit, Inject } from '@angular/core';
 
 @Component({
-  selector: 'app-collection-view-component',
-  templateUrl: './collection-view-component.component.html',
-  styleUrls: ['./collection-view-component.component.scss']
+  selector: 'app-collection-wrapper',
+  templateUrl: './collection-wrapper.component.html',
+  styleUrls: ['./collection-wrapper.component.scss']
 })
-export class CollectionViewComponentComponent implements OnInit {
+export class CollectionWrapperComponent implements OnInit {
 
+  private message: string;
   private rawJSON: string;
   private collectionData: any[]|null;
   private collectionMetaData: ColumnMetaData[];
-  private message: string;
 
-  constructor() {
-  }
+  constructor() { }
 
   ngOnInit() {
   }
@@ -37,4 +35,5 @@ export class CollectionViewComponentComponent implements OnInit {
     this.collectionMetaData = null;
     this.message = null;
   }
+
 }
