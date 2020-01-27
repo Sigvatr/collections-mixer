@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, Input } from '@angular/core';
 import { ColumnMetaData } from '../models/column-meta-data';
+import { EventEmitter } from '@angular/core';
 
 
 @Component({
@@ -8,11 +9,13 @@ import { ColumnMetaData } from '../models/column-meta-data';
   styleUrls: ['./collection-wrapper.component.scss']
 })
 export class CollectionWrapperComponent implements OnInit {
-
   private message: string;
   private rawJSON: string;
   private collectionData: any[]|null;
   private collectionMetaData: ColumnMetaData[];
+
+  @Input() name: string = null;
+  @Output() collectionSet: EventEmitter<any> = new EventEmitter();
 
   constructor() { }
 
@@ -25,6 +28,12 @@ export class CollectionWrapperComponent implements OnInit {
       this.collectionData = JSON.parse(this.rawJSON);
       this.collectionMetaData = Object.keys(this.collectionData[0])
           .map(key => ({ name: key, type: 'string' }));
+
+      this.collectionSet.emit({
+            name: this.name,
+            data: this.collectionData,
+            metadata: this.collectionMetaData
+        });
     }
     catch(exception)
     {
