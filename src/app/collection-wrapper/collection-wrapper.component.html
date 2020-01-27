@@ -1,6 +1,4 @@
 <div *ngIf="collectionData == null; then thenBlock else elseBlock"></div>
-<div>
-</div>
 <ng-template #thenBlock>
     <span *ngIf="message != null">{{ message }}</span>
     <textarea
