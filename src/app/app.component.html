@@ -2,3 +2,8 @@
 
 <app-collection-wrapper name="a" (collectionSet)="collectionSet($event)"></app-collection-wrapper>
 <app-collection-wrapper name="b" (collectionSet)="collectionSet($event)"></app-collection-wrapper>
+
+<div *ngIf="areBothCollectionSet()">
+    <app-choose-column [columns]="collections['a'].metadata"></app-choose-column>
+    <app-choose-column [columns]="collections['b'].metadata"></app-choose-column>
+</div>

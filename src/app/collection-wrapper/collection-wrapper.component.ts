@@ -45,5 +45,11 @@ export class CollectionWrapperComponent implements OnInit {
     this.collectionData = null;
     this.collectionMetaData = null;
     this.message = null;
+
+    this.collectionSet.emit({
+          name: this.name,
+          data: null,
+          metadata: null
+      });
   }
 }

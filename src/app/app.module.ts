@@ -6,12 +6,14 @@ import { AppComponent } from './app.component';
 import { TableComponent } from './table/table.component';
 import { FormsModule } from '@angular/forms';
 import { CollectionWrapperComponent } from './collection-wrapper/collection-wrapper.component';
+import { ChooseColumnComponent } from './choose-column/choose-column.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     TableComponent,
-    CollectionWrapperComponent
+    CollectionWrapperComponent,
+    ChooseColumnComponent
   ],
   imports: [
     BrowserModule,
