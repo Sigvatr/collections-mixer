@@ -7,13 +7,15 @@ import { TableComponent } from './table/table.component';
 import { FormsModule } from '@angular/forms';
 import { CollectionWrapperComponent } from './collection-wrapper/collection-wrapper.component';
 import { ChooseColumnComponent } from './choose-column/choose-column.component';
+import { ChooseOperationComponent } from './choose-operation/choose-operation.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     TableComponent,
     CollectionWrapperComponent,
-    ChooseColumnComponent
+    ChooseColumnComponent,
+    ChooseOperationComponent
   ],
   imports: [
     BrowserModule,

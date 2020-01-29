@@ -1,0 +1,4 @@
+collection <span class="collection-name">a</span> <select [(ngModel)]="operationType">
+    <option *ngFor="let option of operationSet()" value="{{ option.value }}">{{ option.label }}</option>
+</select> collection <span class="collection-name">b</span> ON <app-choose-column [columns]="columnsForFirstCollection"></app-choose-column> = <app-choose-column [columns]="columnsForFirstCollection"></app-choose-column>
+<button (click)="onRunClick()">Run</button>
