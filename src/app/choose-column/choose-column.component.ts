@@ -1,5 +1,6 @@
-import { Component, OnInit, Inject, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ColumnMetaData } from '../models/column-meta-data';
+
 
 @Component({
   selector: 'app-choose-column',
@@ -8,8 +9,9 @@ import { ColumnMetaData } from '../models/column-meta-data';
 })
 export class ChooseColumnComponent implements OnInit {
 
-  @Input()
-  private columns: ColumnMetaData[];
+  @Input() selectedColumn: ColumnMetaData;
+  @Input() columns: ColumnMetaData[];
+  @Output() selectedColumnChange = new EventEmitter<ColumnMetaData>();
 
   constructor() { }
 

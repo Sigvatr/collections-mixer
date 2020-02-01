@@ -2,6 +2,8 @@ import { Component, OnInit, Input, Output } from '@angular/core';
 import { ColumnMetaData } from '../models/column-meta-data';
 import { EventEmitter } from '@angular/core';
 import { Operation } from '../models/operation.enum';
+import { OperationMetadata } from '../models/operation-metadata';
+
 
 @Component({
   selector: 'app-choose-operation',
@@ -10,10 +12,12 @@ import { Operation } from '../models/operation.enum';
 })
 export class ChooseOperationComponent implements OnInit {
   private operationType: Operation;
+  private firstColumnSelection: ColumnMetaData;
+  private secondColumnSelection: ColumnMetaData;
 
   @Input() columnsForFirstCollection: ColumnMetaData[];
   @Input() columnsForSecondCollection: ColumnMetaData[];
-  @Output() operationChoose: EventEmitter<any> = new EventEmitter();
+  @Output() operationChoose: EventEmitter<OperationMetadata> = new EventEmitter();
 
   constructor() { }
 
@@ -33,7 +37,9 @@ export class ChooseOperationComponent implements OnInit {
 
   onRunClick() {
     this.operationChoose.emit({
-      operation: this.operationType
+      operation: this.operationType,
+      firstColumn: this.firstColumnSelection,
+      secondColumn: this.secondColumnSelection
     });
   }
 }

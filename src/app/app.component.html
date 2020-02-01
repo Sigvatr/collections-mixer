@@ -6,6 +6,7 @@
 <div *ngIf="areBothCollectionSet()">
     <app-choose-operation
         [columnsForFirstCollection]="collections['a'].metadata"
-        [columnsForSecondCollection]="collections['b'].metadata">
+        [columnsForSecondCollection]="collections['b'].metadata"
+        (operationChoose)="onOperationChoose($event)">
     </app-choose-operation>
 </div>
