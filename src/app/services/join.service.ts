@@ -7,8 +7,22 @@ import { ColumnMetaData } from '../models/column-meta-data';
 export class JoinService {
 
   public innerJoin(firstCollection: any[], secondCollection: any[], firstColumn: ColumnMetaData, secondColumn: ColumnMetaData) {
-    throw new Error("Method not implemented.");
+    const secondCollectionKeyMap = JoinService.collectionToDict(secondCollection, secondColumn.name);
+
+    return firstCollection
+      .filter(e => secondCollectionKeyMap.hasOwnProperty(e[firstColumn.name]))
+      .map(e => ({ ...e, ...secondCollectionKeyMap[e[firstColumn.name]] }))
   }
 
   constructor() { }
+
+  private static collectionToDict(collection: any[], column: string) {
+    return collection.reduce(
+        (obj, e) => {
+          obj[e[column]] = e;
+          return obj;
+        },
+        {}
+      );
+  }
 }
