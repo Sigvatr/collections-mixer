@@ -14,6 +14,13 @@ export class JoinService {
       .map(e => ({ ...e, ...secondCollectionKeyMap[e[firstColumn.name]] }))
   }
 
+  public leftJoin(firstCollection: any[], secondCollection: any[], firstColumn: ColumnMetaData, secondColumn: ColumnMetaData) {
+    const secondCollectionKeyMap = JoinService.collectionToDict(secondCollection, secondColumn.name);
+
+    return firstCollection
+      .map(e => ({ ...e, ...secondCollectionKeyMap[e[firstColumn.name]] }))
+  }
+
   constructor() { }
 
   private static collectionToDict(collection: any[], column: string) {
