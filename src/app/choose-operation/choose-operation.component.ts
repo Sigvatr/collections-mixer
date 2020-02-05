@@ -28,7 +28,7 @@ export class ChooseOperationComponent implements OnInit {
     return Object.keys(Operation)
       .filter(e => isNaN(+e))
       .map(key => ({
-        value: Operation[key],
+        value: +Operation[key],
         label: key
           .replace(/([A-Z])/g, ' $1')
           .toUpperCase()

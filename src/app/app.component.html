@@ -10,3 +10,9 @@
         (operationChoose)="onOperationChoose($event)">
     </app-choose-operation>
 </div>
+
+<app-collection-wrapper
+    *ngIf="collections.hasOwnProperty('r')"
+    name="r"
+    (collectionSet)="collectionSet($event)">
+</app-collection-wrapper>

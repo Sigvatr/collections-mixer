@@ -12,12 +12,13 @@ import { Operation } from './models/operation.enum';
 export class AppComponent {
   public static readonly FIRST_COLLECTION: string = 'a';
   public static readonly SECOND_COLLECTION: string = 'b';
+  public static readonly RESULT_COLLECTION: string = 'r';
 
   private collections: { [index: string]: any; } = {};
 
   public constructor(
-      private joinService: JoinService
-    ) {
+    private joinService: JoinService
+  ) {
   }
 
   private collectionSet($event) {
@@ -36,16 +37,27 @@ export class AppComponent {
   }
 
   onOperationChoose($event: OperationMetadata) {
-    switch($event.operation) {
+
+    let mixerFunction = null;
+
+    switch (+$event.operation) {
       case Operation.InnerJoin:
-        this.joinService.innerJoin(
-            this.collections[AppComponent.FIRST_COLLECTION],
-            this.collections[AppComponent.SECOND_COLLECTION],
-            $event.firstColumn,
-            $event.secondColumn
-          );
+        mixerFunction = this.joinService.innerJoin;
+        break;
+
+      case Operation.LeftJoin:
+        mixerFunction = this.joinService.leftJoin;
+        break;
+
       default:
         throw new Error(`Unknown option: ${$event.operation}.`);
     }
+
+    this.collections[AppComponent.RESULT_COLLECTION] = mixerFunction(
+      this.collections[AppComponent.FIRST_COLLECTION].data,
+      this.collections[AppComponent.SECOND_COLLECTION].data,
+      $event.firstColumn,
+      $event.secondColumn
+    );
   }
 }
