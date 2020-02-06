@@ -29,7 +29,8 @@ export class AppComponent {
   }
 
   private isCollectionSet(name: string) {
-    return this.collections.hasOwnProperty(name) && this.collections[name].data != null;
+    return this.collections.hasOwnProperty(name)
+      && this.collections[name].data != null;
   }
 
   areBothCollectionSet() {
@@ -53,11 +54,13 @@ export class AppComponent {
         throw new Error(`Unknown option: ${$event.operation}.`);
     }
 
-    this.collections[AppComponent.RESULT_COLLECTION] = mixerFunction(
-      this.collections[AppComponent.FIRST_COLLECTION].data,
-      this.collections[AppComponent.SECOND_COLLECTION].data,
-      $event.firstColumn,
-      $event.secondColumn
-    );
+    this.collections[AppComponent.RESULT_COLLECTION] = {
+          data: mixerFunction(
+              this.collections[AppComponent.FIRST_COLLECTION].data,
+              this.collections[AppComponent.SECOND_COLLECTION].data,
+              $event.firstColumn,
+              $event.secondColumn
+            )
+      }
   }
 }

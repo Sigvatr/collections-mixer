@@ -14,5 +14,6 @@
 <app-collection-wrapper
     *ngIf="collections.hasOwnProperty('r')"
     name="r"
+    [rawJSON]="collections['r'].data | json"
     (collectionSet)="collectionSet($event)">
 </app-collection-wrapper>

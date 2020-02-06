@@ -10,16 +10,19 @@ import { EventEmitter } from '@angular/core';
 })
 export class CollectionWrapperComponent implements OnInit {
   private message: string;
-  private rawJSON: string;
   private collectionData: any[]|null;
   private collectionMetaData: ColumnMetaData[];
 
   @Input() name: string = null;
+  @Input() rawJSON: string = null;
   @Output() collectionSet: EventEmitter<any> = new EventEmitter();
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit() {
+    if (this.rawJSON) {
+      this.onParseCollectionClick();
+    }
   }
 
   onParseCollectionClick() {
