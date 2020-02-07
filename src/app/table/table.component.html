@@ -1,13 +1,17 @@
 <table>
     <thead>
         <tr>
+            <th class="index"></th>
             <th *ngFor="let key of metaData">{{ key.name }}</th>
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let datum of data">
-            <td *ngFor="let key of metaData">
-                {{ datum[key.name] }}
+        <tr *ngFor="let datum of data; let i = index">
+            <td class="index">
+                {{ i }}
+            </td>
+            <td *ngFor="let key of metaData" [class.empty]="!datum.hasOwnProperty(key.name)">
+                {{ datum.hasOwnProperty(key.name) ? datum[key.name] : 'null' }}
             </td>
         </tr>
     </tbody>
