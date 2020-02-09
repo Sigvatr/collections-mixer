@@ -4,11 +4,14 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class ParserService {
-
   constructor() { }
 
-  fromStringParse(input: string) {
+  fromStringToObject(input: string): any[] {
     return JSON.parse(input);
+  }
+
+  fromObjectToString(input: any[]): string {
+    return JSON.stringify(input, null, 4);
   }
 
   findAllColumns(collection: any[]) {

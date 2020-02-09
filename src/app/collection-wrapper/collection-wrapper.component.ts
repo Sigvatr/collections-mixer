@@ -1,6 +1,6 @@
-import { Component, OnInit, Output, Input } from '@angular/core';
-import { ColumnMetaData } from '../models/column-meta-data';
-import { EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
+import { isArray } from 'util';
+import { ParserService } from '../services/parser.service';
 
 
 @Component({
@@ -10,14 +10,15 @@ import { EventEmitter } from '@angular/core';
 })
 export class CollectionWrapperComponent implements OnInit {
   private message: string;
-  private collectionData: any[]|null;
-  private collectionMetaData: ColumnMetaData[];
 
-  @Input() name: string = null;
   @Input() rawJSON: string = null;
-  @Output() collectionSet: EventEmitter<any> = new EventEmitter();
+  @Input() collection: TableData;
+  @Output() collectionSet: EventEmitter<TableData> = new EventEmitter<TableData>();
 
-  constructor() {}
+  constructor(
+      private parserService: ParserService
+    ) {
+  }
 
   ngOnInit() {
     if (this.rawJSON) {
@@ -28,15 +29,17 @@ export class CollectionWrapperComponent implements OnInit {
   onParseCollectionClick() {
     try
     {
-      this.collectionData = JSON.parse(this.rawJSON);
-      this.collectionMetaData = Object.keys(this.collectionData[0])
-          .map(key => ({ name: key, type: 'string' }));
+      const parsedData = this.parserService.fromStringToObject(this.rawJSON);
+      if (!isArray(parsedData)) {
+        throw new Error('Provided data are not array');
+      }
 
-      this.collectionSet.emit({
-            name: this.name,
-            data: this.collectionData,
-            metadata: this.collectionMetaData
-        });
+      this.collection = {
+          data: parsedData,
+          columns: this.parserService.findAllColumns(parsedData)
+        };
+
+      this.collectionSet.emit(this.collection);
     }
     catch(exception)
     {
@@ -45,14 +48,7 @@ export class CollectionWrapperComponent implements OnInit {
   }
 
   editData() {
-    this.collectionData = null;
-    this.collectionMetaData = null;
-    this.message = null;
-
-    this.collectionSet.emit({
-          name: this.name,
-          data: null,
-          metadata: null
-      });
+    this.rawJSON = this.parserService.fromObjectToString(this.collection.data);
+    this.collection = null;
   }
 }

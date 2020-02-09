@@ -1,5 +1,5 @@
-<div *ngIf="collectionData == null; then thenBlock else elseBlock"></div>
-<ng-template #thenBlock>
+<div *ngIf="collection == null; then hasCollection else hasNotCollection"></div>
+<ng-template #hasCollection>
     <span *ngIf="message != null">{{ message }}</span>
     <textarea
         [(ngModel)]="rawJSON" 
@@ -8,7 +8,7 @@
 
     <button (click)="onParseCollectionClick()">Parse data</button>
 </ng-template>
-<ng-template #elseBlock>
-    <app-table [data]="collectionData"></app-table>
+<ng-template #hasNotCollection>
+    <app-table [data]="collection.data"></app-table>
     <button (click)="editData()">Edit data</button>
 </ng-template>
