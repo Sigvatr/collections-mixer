@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
 import { isArray } from 'util';
-import { ParserService } from '../services/parser.service';
+import { ParserService } from '../../services/parser.service';
 
 
 @Component({

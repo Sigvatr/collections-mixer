@@ -2,12 +2,13 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { TableComponent } from './table/table.component';
 import { FormsModule } from '@angular/forms';
-import { CollectionWrapperComponent } from './collection-wrapper/collection-wrapper.component';
-import { ChooseColumnComponent } from './choose-column/choose-column.component';
-import { ChooseOperationComponent } from './choose-operation/choose-operation.component';
+import { AppComponent } from './components/app/app.component';
+import { TableComponent } from './components/table/table.component';
+import { CollectionWrapperComponent } from './components/collection-wrapper/collection-wrapper.component';
+import { ChooseColumnComponent } from './components/choose-column/choose-column.component';
+import { ChooseOperationComponent } from './components/choose-operation/choose-operation.component';
+
 
 @NgModule({
   declarations: [
