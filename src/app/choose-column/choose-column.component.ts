@@ -1,5 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { ColumnMetaData } from '../models/column-meta-data';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 
 @Component({
@@ -7,15 +6,11 @@ import { ColumnMetaData } from '../models/column-meta-data';
   templateUrl: './choose-column.component.html',
   styleUrls: ['./choose-column.component.scss']
 })
-export class ChooseColumnComponent implements OnInit {
+export class ChooseColumnComponent {
 
-  @Input() selectedColumn: ColumnMetaData;
-  @Input() columns: ColumnMetaData[];
-  @Output() selectedColumnChange = new EventEmitter<ColumnMetaData>();
+  @Input() selectedColumn: string;
+  @Input() columns: string[];
+  @Output() selectedColumnChange = new EventEmitter<string>();
 
   constructor() { }
-
-  ngOnInit() {
-  }
-
 }

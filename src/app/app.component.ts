@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { JoinService } from './services/join.service';
 import { OperationMetadata } from './models/operation-metadata';
 import { Operation } from './models/operation.enum';
+import { ParserService } from './services/parser.service';
 
 
 @Component({
@@ -12,25 +13,34 @@ import { Operation } from './models/operation.enum';
 export class AppComponent {
   public static readonly FIRST_COLLECTION: string = 'a';
   public static readonly SECOND_COLLECTION: string = 'b';
-  public static readonly RESULT_COLLECTION: string = 'r';
 
-  private collections: { [index: string]: any; } = {};
+  private collections: { [index: string]: TableData; } = {};
+  private resultCollection: any[];
 
   public constructor(
-    private joinService: JoinService
+    private joinService: JoinService,
+    private serviceService: ParserService
   ) {
   }
 
-  private collectionSet($event) {
-    this.collections[$event['name']] = {
-      data: $event['data'],
-      metadata: $event['metadata']
-    };
+  collectionASet($event: TableData) {
+    return this.collectionSet(AppComponent.FIRST_COLLECTION, $event);
   }
 
-  private isCollectionSet(name: string) {
-    return this.collections.hasOwnProperty(name)
-      && this.collections[name].data != null;
+  collectionBSet($event: TableData) {
+    return this.collectionSet(AppComponent.SECOND_COLLECTION, $event);
+  }
+
+  aCollectionColumns(): string[] {
+    return this.collections[AppComponent.FIRST_COLLECTION].columns;
+  }
+
+  bCollectionColumns(): string[] {
+    return this.collections[AppComponent.SECOND_COLLECTION].columns;
+  }
+
+  resultAsJSON() {
+    return this.serviceService.fromObjectToString(this.resultCollection);
   }
 
   areBothCollectionSet() {
@@ -54,13 +64,21 @@ export class AppComponent {
         throw new Error(`Unknown option: ${$event.operation}.`);
     }
 
-    this.collections[AppComponent.RESULT_COLLECTION] = {
-          data: mixerFunction(
-              this.collections[AppComponent.FIRST_COLLECTION].data,
-              this.collections[AppComponent.SECOND_COLLECTION].data,
-              $event.firstColumn,
-              $event.secondColumn
-            )
-      }
+    this.resultCollection = mixerFunction(
+      this.collections[AppComponent.FIRST_COLLECTION].data,
+      this.collections[AppComponent.SECOND_COLLECTION].data,
+      $event.firstColumn,
+      $event.secondColumn
+    );
+  }
+
+  private isCollectionSet(name: string) {
+    return this.collections.hasOwnProperty(name)
+      && this.collections[name].data != null;
+  }
+
+  private collectionSet(name: string, $event: TableData) {
+    this.collections[name] = $event;
+    this.resultCollection = null;
   }
 }

@@ -12,11 +12,11 @@ import { OperationMetadata } from '../models/operation-metadata';
 })
 export class ChooseOperationComponent implements OnInit {
   private operationType: Operation;
-  private firstColumnSelection: ColumnMetaData;
-  private secondColumnSelection: ColumnMetaData;
+  private firstColumnSelection: string;
+  private secondColumnSelection: string;
 
-  @Input() columnsForFirstCollection: ColumnMetaData[];
-  @Input() columnsForSecondCollection: ColumnMetaData[];
+  @Input() columnsForFirstCollection: string[];
+  @Input() columnsForSecondCollection: string[];
   @Output() operationChoose: EventEmitter<OperationMetadata> = new EventEmitter();
 
   constructor() { }
