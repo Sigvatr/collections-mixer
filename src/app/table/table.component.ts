@@ -1,20 +1,13 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { ColumnMetaData } from '../models/column-meta-data';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss']
 })
-export class TableComponent implements OnInit {
+export class TableComponent {
 
-  @Input()
-  private data: any[];
-  private metaData: ColumnMetaData[];
+  @Input() data: TableData;
   
   constructor() { }
-
-  ngOnInit() {
-    this.metaData = Object.keys(this.data[0]).map(key => ({ name: key, type: 'string' }));
-  }
 }
