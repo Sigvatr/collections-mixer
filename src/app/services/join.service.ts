@@ -21,15 +21,22 @@ export class JoinService {
       .map(e => ({ ...e, ...secondCollectionKeyMap[e[firstColumn]] }))
   }
 
+  public rightJoin(firstCollection: any[], secondCollection: any[], firstColumn: string, secondColumn: string) {
+    const firstCollectionKeyMap = JoinService.collectionToDict(firstCollection, firstColumn);
+
+    return secondCollection
+      .map(e => ({ ...e, ...firstCollectionKeyMap[e[secondColumn]] }))
+  }
+
   constructor() { }
 
   private static collectionToDict(collection: any[], column: string) {
     return collection.reduce(
-        (obj, e) => {
-          obj[e[column]] = e;
-          return obj;
-        },
-        {}
-      );
+      (obj, e) => {
+        obj[e[column]] = e;
+        return obj;
+      },
+      {}
+    );
   }
 }

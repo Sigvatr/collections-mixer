@@ -76,4 +76,31 @@ describe('JoinService', () => {
     expect(JSON.stringify(result))
       .toEqual(JSON.stringify(expectResult));
   });
+
+  it('should calculate right join', () => {
+    // Assign
+    const service: JoinService = TestBed.get(JoinService);
+
+    const expectResult = [
+      { quantity: 23, name: 'potatoes', price: 3 },
+      { quantity: 62, name: 'avocados', price: 4 },
+      { quantity: 30, name: 'kiwis', price: 2 },
+      { quantity: 34, name: 'onions', price: 1 },
+      { quantity: 21, name: 'melons', price: 5 },
+      { quantity: 35, name: 'broccoli' },
+      { quantity: 23, name: 'squash' }
+    ];
+
+    // Act
+    const result = service.rightJoin(
+      collectionA,
+      collectionB,
+      'name',
+      'name',
+    );
+
+    // Assert
+    expect(JSON.stringify(result))
+      .toEqual(JSON.stringify(expectResult));
+  });
 });
