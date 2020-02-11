@@ -41,8 +41,8 @@ describe('JoinService', () => {
     const result = service.innerJoin(
       collectionA,
       collectionB,
-      { name: 'name', type: 'string' },
-      { name: 'name', type: 'string' }
+      'name',
+      'name'
     );
 
     // Assert
@@ -68,8 +68,8 @@ describe('JoinService', () => {
     const result = service.leftJoin(
       collectionA,
       collectionB,
-      { name: 'name', type: 'string' },
-      { name: 'name', type: 'string' }
+      'name',
+      'name',
     );
 
     // Assert
