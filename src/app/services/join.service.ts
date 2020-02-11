@@ -28,6 +28,18 @@ export class JoinService {
       .map(e => ({ ...e, ...firstCollectionKeyMap[e[secondColumn]] }))
   }
 
+  public fullOutherJoin(firstCollection: any[], secondCollection: any[], firstColumn: string, secondColumn: string) {
+    const firstCollectionKeyMap = JoinService.collectionToDict(firstCollection, firstColumn);
+    const secondCollectionKeyMap = JoinService.collectionToDict(secondCollection, secondColumn);
+
+    return firstCollection
+      .map(e => ({ ...e, ...secondCollectionKeyMap[e[firstColumn]]}))
+      .concat(
+        secondCollection
+          .filter(e => !firstCollectionKeyMap.hasOwnProperty(e[secondColumn]))
+      )
+  }
+
   constructor() { }
 
   private static collectionToDict(collection: any[], column: string) {

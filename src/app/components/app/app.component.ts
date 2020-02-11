@@ -60,6 +60,14 @@ export class AppComponent {
         mixerFunction = this.joinService.leftJoin;
         break;
 
+      case Operation.RightJoin:
+        mixerFunction = this.joinService.rightJoin;
+        break;
+
+      case Operation.FullOtherJoin:
+        mixerFunction = this.joinService.fullOutherJoin;
+        break;
+
       default:
         throw new Error(`Unknown option: ${$event.operation}.`);
     }

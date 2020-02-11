@@ -1,5 +1,4 @@
 import { Component, OnInit, Input, Output } from '@angular/core';
-import { ColumnMetaData } from '../../models/column-meta-data';
 import { EventEmitter } from '@angular/core';
 import { Operation } from '../../models/operation.enum';
 import { OperationMetadata } from '../../models/operation-metadata';
