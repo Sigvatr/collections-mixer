@@ -9,6 +9,12 @@ table {
         padding  : 10px 5px;
     }
 
+    th {
+        -webkit-user-select: none;
+        -ms-user-select    : none;
+        user-select        : none;
+    }
+
     .index {
         min-width: 30px;
         width    : 30px;
