@@ -3,6 +3,7 @@ import { JoinService } from '../../services/join.service';
 import { OperationMetadata } from '../../models/operation-metadata';
 import { Operation } from '../../models/operation.enum';
 import { ParserService } from '../../services/parser.service';
+import { TableData } from 'src/app/models/table.data';
 
 
 @Component({

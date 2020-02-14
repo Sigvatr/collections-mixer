@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
 import { isArray } from 'util';
 import { ParserService } from '../../services/parser.service';
+import { TableData } from 'src/app/models/table.data';
 
 
 @Component({
@@ -36,7 +37,8 @@ export class CollectionWrapperComponent implements OnInit {
 
       this.collection = {
           data: parsedData,
-          columns: this.parserService.findAllColumns(parsedData)
+          columns: this.parserService.findAllColumns(parsedData),
+          order: null
         };
 
       this.collectionSet.emit(this.collection);

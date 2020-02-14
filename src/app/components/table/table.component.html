@@ -2,7 +2,13 @@
     <thead>
         <tr>
             <th class="index"></th>
-            <th *ngFor="let column of data.columns">{{ column }}</th>
+            <th *ngFor="let column of data.columns" (click)="sortByColumn(column)">
+                <span *ngIf="data.order?.column == column">
+                    <span *ngIf="data.order.asc">&#9650;</span>
+                    <span *ngIf="!data.order.asc">&#9660;</span>
+                </span>
+                {{ column }}
+            </th>
         </tr>
     </thead>
     <tbody>
