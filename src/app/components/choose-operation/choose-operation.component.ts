@@ -10,7 +10,9 @@ import { OperationMetadata } from '../../models/operation-metadata';
   styleUrls: ['./choose-operation.component.scss']
 })
 export class ChooseOperationComponent implements OnInit {
-  private operationType: Operation;
+  private readonly Operation: any = Operation;
+
+  private selectedType: Operation|null = null;
   private firstColumnSelection: string;
   private secondColumnSelection: string;
 
@@ -23,20 +25,13 @@ export class ChooseOperationComponent implements OnInit {
   ngOnInit() {
   }
 
-  operationSet() {
-    return Object.keys(Operation)
-      .filter(e => isNaN(+e))
-      .map(key => ({
-        value: +Operation[key],
-        label: key
-          .replace(/([A-Z])/g, ' $1')
-          .toUpperCase()
-      }));
+  chooseOperation(operation: Operation) {
+    this.selectedType = operation;
   }
 
   onRunClick() {
     this.operationChoose.emit({
-      operation: this.operationType,
+      operation: this.selectedType,
       firstColumn: this.firstColumnSelection,
       secondColumn: this.secondColumnSelection
     });
