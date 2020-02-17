@@ -16,12 +16,12 @@ export class AppComponent {
   public static readonly SECOND_COLLECTION: string = 'b';
 
   private collections: { [index: string]: TableData; } = {};
-  private resultCollection: any[];
+  private resultCollectionAsJSON: string | null = null;
 
   public constructor(
-    private joinService: JoinService,
-    private serviceService: ParserService
-  ) {
+      private joinService: JoinService,
+      private serviceService: ParserService
+    ) {
   }
 
   collectionASet($event: TableData) {
@@ -40,45 +40,47 @@ export class AppComponent {
     return this.collections[AppComponent.SECOND_COLLECTION].columns;
   }
 
-  resultAsJSON() {
-    return this.serviceService.fromObjectToString(this.resultCollection);
-  }
-
   areBothCollectionSet() {
     return this.isCollectionSet(AppComponent.FIRST_COLLECTION) && this.isCollectionSet(AppComponent.SECOND_COLLECTION);
   }
 
   onOperationChoose($event: OperationMetadata) {
+    try {
+      let mixerFunction = null;
+      switch (+$event.operation) {
+        case Operation.InnerJoin:
+          mixerFunction = this.joinService.innerJoin;
+          break;
 
-    let mixerFunction = null;
+        case Operation.LeftJoin:
+          mixerFunction = this.joinService.leftJoin;
+          break;
 
-    switch (+$event.operation) {
-      case Operation.InnerJoin:
-        mixerFunction = this.joinService.innerJoin;
-        break;
+        case Operation.RightJoin:
+          mixerFunction = this.joinService.rightJoin;
+          break;
 
-      case Operation.LeftJoin:
-        mixerFunction = this.joinService.leftJoin;
-        break;
+        case Operation.FullOtherJoin:
+          mixerFunction = this.joinService.fullOutherJoin;
+          break;
 
-      case Operation.RightJoin:
-        mixerFunction = this.joinService.rightJoin;
-        break;
+        default:
+          throw new Error(`Unknown option: ${$event.operation}.`);
+      }
 
-      case Operation.FullOtherJoin:
-        mixerFunction = this.joinService.fullOutherJoin;
-        break;
-
-      default:
-        throw new Error(`Unknown option: ${$event.operation}.`);
+      this.resultCollectionAsJSON = this.serviceService.fromObjectToString(
+        mixerFunction(
+          this.collections[AppComponent.FIRST_COLLECTION].data,
+          this.collections[AppComponent.SECOND_COLLECTION].data,
+          $event.firstColumn,
+          $event.secondColumn
+        )
+      );
     }
-
-    this.resultCollection = mixerFunction(
-      this.collections[AppComponent.FIRST_COLLECTION].data,
-      this.collections[AppComponent.SECOND_COLLECTION].data,
-      $event.firstColumn,
-      $event.secondColumn
-    );
+    catch (err) {
+      this.resultCollectionAsJSON = null;
+      throw err;
+    }
   }
 
   private isCollectionSet(name: string) {
@@ -88,6 +90,6 @@ export class AppComponent {
 
   private collectionSet(name: string, $event: TableData) {
     this.collections[name] = $event;
-    this.resultCollection = null;
+    this.resultCollectionAsJSON = null;
   }
 }
