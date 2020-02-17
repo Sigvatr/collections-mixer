@@ -3,11 +3,13 @@
 }
 
 svg.operation-type-button {
-    margin    : 4px;
-    width     : 157px;
-    height    : 105px;
-    cursor    : pointer;
-    box-sizing: border-box;
+    margin            : 4px;
+    width             : 157px;
+    height            : 105px;
+    cursor            : pointer;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing   : border-box;
+    box-sizing        : border-box;
 
     circle {
         opacity       : 1;
