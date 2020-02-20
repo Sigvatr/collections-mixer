@@ -1,14 +1,26 @@
-<div *ngIf="collection == null; then hasCollection else hasNotCollection"></div>
-<ng-template #hasCollection>
-    <span *ngIf="message != null">{{ message }}</span>
-    <textarea
-        [(ngModel)]="rawJSON" 
-        placeholder="Please provide the JSON array with objects">
-    </textarea>
+<ng-container [ngSwitch]="mode">
+    <ng-container *ngSwitchCase="'edit'">
+        <span *ngIf="message != null">{{ message }}</span>
+        <textarea [(ngModel)]="rawJSON" placeholder="Please provide the JSON array with objects">
+            </textarea>
 
-    <button (click)="onParseCollectionClick()">Parse data</button>
-</ng-template>
-<ng-template #hasNotCollection>
-    <app-table [data]="collection"></app-table>
-    <button (click)="editData()">Edit data</button>
-</ng-template>
+        <button class="full-width" (click)="onParseCollectionClick()">Parse data</button>
+    </ng-container>
+    <ng-container *ngSwitchCase="'table'">
+        <app-table [data]="collection"></app-table>
+
+        <button class="edit-data" (click)="editData()">Edit data</button>
+        <button class="show-as-csv" (click)="showAsCSV()">Show CSV</button>
+    </ng-container>
+    <ng-container *ngSwitchCase="'csv'">
+        <textarea readonly="readonly">
+            {{ csv() }}
+        </textarea>
+
+        <button class="edit-data" (click)="editData()">Edit data</button>
+        <button class="show-as-csv" (click)="closeCSVView()">Close CSV</button>
+    </ng-container>
+    <ng-container *ngSwitchDefault>
+        [Error] unknown mode: {{ mode }}.
+    </ng-container>
+</ng-container>

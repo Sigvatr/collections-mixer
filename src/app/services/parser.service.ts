@@ -6,11 +6,11 @@ import { Injectable } from '@angular/core';
 export class ParserService {
   constructor() { }
 
-  fromStringToObject(input: string): any[] {
+  fromJSONToObject(input: string): any[] {
     return JSON.parse(input);
   }
 
-  fromObjectToString(input: any[]): string {
+  fromObjectToJSON(input: any[]): string {
     return JSON.stringify(input, null, 4);
   }
 
@@ -23,4 +23,6 @@ export class ParserService {
         new Set()
       );
   }
+
+
 }

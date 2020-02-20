@@ -11,14 +11,16 @@ import { TableData } from 'src/app/models/table.data';
 })
 export class CollectionWrapperComponent implements OnInit {
   private message: string;
+  private mode: string;
 
   @Input() rawJSON: string = null;
   @Input() collection: TableData;
   @Output() collectionSet: EventEmitter<TableData> = new EventEmitter<TableData>();
 
   constructor(
-      private parserService: ParserService
-    ) {
+    private parserService: ParserService
+  ) {
+    this.mode = 'edit';
   }
 
   ngOnInit() {
@@ -28,29 +30,42 @@ export class CollectionWrapperComponent implements OnInit {
   }
 
   onParseCollectionClick() {
-    try
-    {
-      const parsedData = this.parserService.fromStringToObject(this.rawJSON);
+    try {
+      const parsedData = this.parserService.fromJSONToObject(this.rawJSON);
       if (!isArray(parsedData)) {
         throw new Error('Provided data are not array');
       }
 
       this.collection = {
-          data: parsedData,
-          columns: this.parserService.findAllColumns(parsedData),
-          order: null
-        };
+        data: parsedData,
+        columns: this.parserService.findAllColumns(parsedData),
+        order: null
+      };
 
+      this.mode = 'table';
       this.collectionSet.emit(this.collection);
     }
-    catch(exception)
-    {
+    catch (exception) {
       this.message = exception.message;
+      this.mode = 'edit';
     }
   }
 
   editData() {
-    this.rawJSON = this.parserService.fromObjectToString(this.collection.data);
+    this.rawJSON = this.parserService.fromObjectToJSON(this.collection.data);
     this.collection = null;
+    this.mode = 'edit';
+  }
+
+  closeCSVView() {
+    this.mode = 'table';
+  }
+
+  showAsCSV() {
+    this.mode = 'csv';
+  }
+
+  csv() {
+    return JSON.stringify(this.collection);
   }
 }

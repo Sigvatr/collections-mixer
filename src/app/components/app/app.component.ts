@@ -68,7 +68,7 @@ export class AppComponent {
           throw new Error(`Unknown option: ${$event.operation}.`);
       }
 
-      this.resultCollectionAsJSON = this.serviceService.fromObjectToString(
+      this.resultCollectionAsJSON = this.serviceService.fromObjectToJSON(
         mixerFunction(
           this.collections[AppComponent.FIRST_COLLECTION].data,
           this.collections[AppComponent.SECOND_COLLECTION].data,
