@@ -57,12 +57,12 @@ export class CollectionWrapperComponent implements OnInit {
     this.mode = 'edit';
   }
 
-  closeCSVView() {
-    this.mode = 'table';
-  }
-
   showAsCSV() {
     this.mode = 'csv';
+  }
+
+  closeCSVView() {
+    this.mode = 'table';
   }
 
   csv() {

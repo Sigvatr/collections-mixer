@@ -14,15 +14,24 @@ export class ParserService {
     return JSON.stringify(input, null, 4);
   }
 
-  findAllColumns(collection: any[]) {
+  findAllColumns(collection: any[]): Set<string> {
     return collection.reduce(
-        (set: Set<any>, row: any[]) => Object.keys(row).reduce(
-          (setForRow: Set<any>, element: any) => setForRow.add(element),
+        (set: Set<string>, row: any[]) => Object.keys(row).reduce(
+          (setForRow: Set<string>, element: any) => setForRow.add(element),
           set
         ),
         new Set()
       );
   }
 
+  fromObjectToCSV(collection: any[]): string {
+    const columns = Array.from(this.findAllColumns(collection));
 
+    return [columns.join(',')].concat(
+        collection
+          .map(
+              line => columns.map(c => (line[c] || '')).join(',')
+            )
+      ).join('\n');
+  }
 }
