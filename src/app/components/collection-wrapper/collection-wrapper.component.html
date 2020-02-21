@@ -1,8 +1,9 @@
 <ng-container [ngSwitch]="mode">
     <ng-container *ngSwitchCase="'edit'">
         <span *ngIf="message != null">{{ message }}</span>
-        <textarea [(ngModel)]="rawJSON" placeholder="Please provide the JSON array with objects">
-            </textarea>
+        <textarea [(ngModel)]="rawJSON"
+                  placeholder="Please provide the JSON array with objects">
+        </textarea>
 
         <button class="full-width" (click)="onParseCollectionClick()">Parse data</button>
     </ng-container>
@@ -13,9 +14,7 @@
         <button class="show-as-csv" (click)="showAsCSV()">Show CSV</button>
     </ng-container>
     <ng-container *ngSwitchCase="'csv'">
-        <textarea readonly="readonly">
-            {{ csv() }}
-        </textarea>
+        <textarea readonly="readonly">{{ csv() }}</textarea>
 
         <button class="edit-data" (click)="editData()">Edit data</button>
         <button class="show-as-csv" (click)="closeCSVView()">Close CSV</button>

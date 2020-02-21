@@ -38,7 +38,7 @@ export class CollectionWrapperComponent implements OnInit {
 
       this.collection = {
         data: parsedData,
-        columns: this.parserService.findAllColumns(parsedData),
+        columns: Array.from(this.parserService.findAllColumns(parsedData)),
         order: null
       };
 
@@ -66,6 +66,6 @@ export class CollectionWrapperComponent implements OnInit {
   }
 
   csv() {
-    return JSON.stringify(this.collection);
+    return this.parserService.fromObjectToCSV(this.collection);
   }
 }

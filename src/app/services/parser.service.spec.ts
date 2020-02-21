@@ -1,6 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 
 import { ParserService } from './parser.service';
+import { TableData } from '../models/table.data';
 
 describe('ParserService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
@@ -31,12 +32,16 @@ describe('ParserService', () => {
   it('should convert data set (without strings) into CSV', () => {
     // Assign
     const service: ParserService = TestBed.get(ParserService);
-    const testCollection = [
-      { 'a': 1, 'b': 2 },
-      { 'a': 3, 'b': 4, 'c': 5 },
-      { 'a': 6, 'b': 7, 'd': 8 },
-      { 'b': 9, 'd': 10 },
-    ];
+    const testCollection: TableData = {
+      data: [
+        { 'a': 1, 'b': 2 },
+        { 'a': 3, 'b': 4, 'c': 5 },
+        { 'a': 6, 'b': 7, 'd': 8 },
+        { 'b': 9, 'd': 10 },
+      ],
+      columns: ['a', 'b', 'c', 'd'],
+      order: null
+    };
     const expected = `a,b,c,d
 1,2,,
 3,4,5,

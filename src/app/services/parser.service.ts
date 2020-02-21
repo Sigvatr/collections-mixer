@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { TableData } from '../models/table.data';
 
 @Injectable({
   providedIn: 'root'
@@ -24,13 +25,11 @@ export class ParserService {
       );
   }
 
-  fromObjectToCSV(collection: any[]): string {
-    const columns = Array.from(this.findAllColumns(collection));
-
-    return [columns.join(',')].concat(
-        collection
+  fromObjectToCSV(collection: TableData): string {
+    return [collection.columns.join(',')].concat(
+        collection.data
           .map(
-              line => columns.map(c => (line[c] || '')).join(',')
+              line => collection.columns.map(c => (line[c] || '')).join(',')
             )
       ).join('\n');
   }
