@@ -26,11 +26,20 @@ export class ParserService {
   }
 
   fromObjectToCSV(collection: TableData): string {
-    return [collection.columns.join(',')].concat(
-        collection.data
-          .map(
-              line => collection.columns.map(c => (line[c] || '')).join(',')
-            )
-      ).join('\n');
+    return [
+        collection.columns.join(',')
+      ].concat(
+          collection.data
+            .map(
+                line => collection.columns
+                  .map(column => line[column] || '')
+                  .map(item => ((typeof item === 'string' || item instanceof String) && (item.indexOf(',') > -1 || item.indexOf('"') > -1))
+                    ? `"${item.replace(/"/g, '""')}"`
+                    : item
+                  )
+                  .join(',')
+              )
+        )
+      .join('\n');
   }
 }

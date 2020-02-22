@@ -54,4 +54,31 @@ describe('ParserService', () => {
     // Assert
     expect(expected).toEqual(result);
   });
+
+  it('should convert data set (with strings, with commas) into CSV', () => {
+    // Assign
+    const service: ParserService = TestBed.get(ParserService);
+    const testCollection: TableData = {
+      data: [
+        { 'a': 1, 'b': 'simple string' },
+        { 'a': 'Not so "simple" string', 'b': 4, 'c': 5 },
+        { 'a': 6, 'b': 7, 'd': 'Also, not so simple string' },
+        { 'b': 9, 'd': 10 },
+      ],
+      columns: ['a', 'b', 'c', 'd'],
+      order: null
+    };
+    const expected = `a,b,c,d
+1,simple string,,
+"Not so ""simple"" string",4,5,
+6,7,,"Also, not so simple string"
+,9,,10`;
+
+    // Act
+    const result = service.fromObjectToCSV(testCollection);
+
+    // Assert
+    expect(expected).toEqual(result);
+  });
+
 });
