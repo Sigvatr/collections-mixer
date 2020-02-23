@@ -30,6 +30,8 @@ export class CollectionWrapperComponent implements OnInit {
   }
 
   onParseCollectionClick() {
+    this.message = null;
+
     try {
       const parsedData = this.parserService.fromJSONToObject(this.rawJSON);
       if (!isArray(parsedData)) {
