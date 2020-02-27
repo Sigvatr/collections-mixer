@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, Input, EventEmitter, SimpleChanges } from '@angular/core';
 import { isArray } from 'util';
 import { ParserService } from '../../services/parser.service';
 import { TableData } from 'src/app/models/table.data';
@@ -12,38 +12,49 @@ import { TableData } from 'src/app/models/table.data';
 export class CollectionWrapperComponent implements OnInit {
   private message: string;
   private mode: string;
+  private _rawJSON: string = null;
 
-  @Input() rawJSON: string = null;
+  @Input() set rawJSON(value: string) {
+    this.collection = null;
+    this._rawJSON = value;
+    if (this._rawJSON) {
+      this.collection = this.buildCollection(this._rawJSON);
+    }
+  }
+
+  get rawJSON() {
+    return this._rawJSON;
+  }
+
   @Input() collection: TableData;
   @Output() collectionSet: EventEmitter<TableData> = new EventEmitter<TableData>();
 
   constructor(
     private parserService: ParserService
   ) {
-    this.mode = 'edit';
   }
 
   ngOnInit() {
-    if (this.rawJSON) {
-      this.onParseCollectionClick();
+    this.mode = this.rawJSON ? 'table' : 'edit';
+  }
+
+  private buildCollection(rawJSON: string): TableData {
+    const parsedData = this.parserService.fromJSONToObject(rawJSON);
+    if (!isArray(parsedData)) {
+      throw new Error('Provided data are not array');
     }
+
+    return {
+      data: parsedData,
+      columns: Array.from(this.parserService.findAllColumns(parsedData)),
+      order: null
+    };
   }
 
   onParseCollectionClick() {
     this.message = null;
-
     try {
-      const parsedData = this.parserService.fromJSONToObject(this.rawJSON);
-      if (!isArray(parsedData)) {
-        throw new Error('Provided data are not array');
-      }
-
-      this.collection = {
-        data: parsedData,
-        columns: Array.from(this.parserService.findAllColumns(parsedData)),
-        order: null
-      };
-
+      this.collection = this.buildCollection(this.rawJSON);
       this.mode = 'table';
       this.collectionSet.emit(this.collection);
     }
@@ -54,8 +65,7 @@ export class CollectionWrapperComponent implements OnInit {
   }
 
   editData() {
-    this.rawJSON = this.parserService.fromObjectToJSON(this.collection.data);
-    this.collection = null;
+    this._rawJSON = this.parserService.fromObjectToJSON(this.collection.data);
     this.mode = 'edit';
   }
 
