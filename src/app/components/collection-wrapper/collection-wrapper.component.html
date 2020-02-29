@@ -1,6 +1,6 @@
 <ng-container [ngSwitch]="mode">
     <ng-container *ngSwitchCase="'edit'">
-        <span *ngIf="message != null">{{ message }}</span>
+        <app-error-message [value]="message"></app-error-message>
         <textarea [(ngModel)]="rawJSON"
                   placeholder="Please provide the JSON array with objects">
         </textarea>

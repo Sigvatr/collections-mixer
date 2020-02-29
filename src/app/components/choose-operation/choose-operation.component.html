@@ -1,4 +1,5 @@
-<p>Column from collection A: <app-choose-column [(selectedColumn)]="firstColumnSelection" [columns]="columnsForFirstCollection"></app-choose-column></p>
+<app-error-message [value]="message"></app-error-message>
+<p>Column from collection A: <app-choose-column [(selectedColumn)]="firstColumnSelection" [columns]="columnsForFirstCollection" (change)="onSelectChange()"></app-choose-column></p>
 <p>
     <svg class="operation-type-button" (click)="chooseOperation(Operation.InnerJoin)"
         [class.selected]="selectedType == Operation.InnerJoin">
@@ -39,6 +40,6 @@
     </svg>
 </p>
 <p>
-    Column from collection B: <app-choose-column [(selectedColumn)]="secondColumnSelection" [columns]="columnsForFirstCollection"></app-choose-column>
+    Column from collection B: <app-choose-column [(selectedColumn)]="secondColumnSelection" [columns]="columnsForFirstCollection" (change)="onSelectChange()"></app-choose-column>
     <button (click)="onRunClick()">Run</button>
 </p>

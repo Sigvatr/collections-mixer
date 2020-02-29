@@ -8,6 +8,7 @@ import { TableComponent } from './components/table/table.component';
 import { CollectionWrapperComponent } from './components/collection-wrapper/collection-wrapper.component';
 import { ChooseColumnComponent } from './components/choose-column/choose-column.component';
 import { ChooseOperationComponent } from './components/choose-operation/choose-operation.component';
+import { ErrorMessageComponent } from './components/error-message.component';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { ChooseOperationComponent } from './components/choose-operation/choose-o
     TableComponent,
     CollectionWrapperComponent,
     ChooseColumnComponent,
-    ChooseOperationComponent
+    ChooseOperationComponent,
+    ErrorMessageComponent
   ],
   imports: [
     BrowserModule,

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output } from '@angular/core';
+import { Component, Input, Output } from '@angular/core';
 import { EventEmitter } from '@angular/core';
 import { Operation } from '../../models/operation.enum';
 import { OperationMetadata } from '../../models/operation-metadata';
@@ -9,9 +9,10 @@ import { OperationMetadata } from '../../models/operation-metadata';
   templateUrl: './choose-operation.component.html',
   styleUrls: ['./choose-operation.component.scss']
 })
-export class ChooseOperationComponent implements OnInit {
+export class ChooseOperationComponent {
   private readonly Operation: any = Operation;
 
+  private errorMessage: string = null;
   private selectedType: Operation|null = null;
   private firstColumnSelection: string;
   private secondColumnSelection: string;
@@ -22,18 +23,25 @@ export class ChooseOperationComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
-  }
-
-  chooseOperation(operation: Operation) {
+  chooseOperation(operation: Operation): void {
+    this.errorMessage = null;
     this.selectedType = operation;
   }
 
-  onRunClick() {
+  onRunClick(): void {
+    if (!this.selectedType || !this.firstColumnSelection || !this.secondColumnSelection) {
+      this.errorMessage = 'Please set all fields';
+      return;
+    }
+
     this.operationChoose.emit({
       operation: this.selectedType,
       firstColumn: this.firstColumnSelection,
       secondColumn: this.secondColumnSelection
     });
+  }
+
+  onSelectChange(): void {
+    this.errorMessage = null;
   }
 }
