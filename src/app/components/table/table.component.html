@@ -2,12 +2,14 @@
     <thead>
         <tr>
             <th class="index"></th>
-            <th *ngFor="let column of data.columns" (click)="sortByColumn(column)">
+            <th *ngFor="let column of data.columns">
                 <span *ngIf="data.order?.column == column">
                     <span *ngIf="data.order.asc">&#9650;</span>
                     <span *ngIf="!data.order.asc">&#9660;</span>
                 </span>
-                {{ column }}
+                <span (click)="sortByColumn(column)">{{ column }}</span>
+                <button (click)="setAsPrimaryKey(column)" *ngIf="primaryKeyColumn != column">Set as primary key</button>
+                <span class="note" *ngIf="primaryKeyColumn == column">Primary key</span>
             </th>
         </tr>
     </thead>

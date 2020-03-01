@@ -10,8 +10,13 @@ import { TableData } from 'src/app/models/table.data';
 export class TableComponent {
 
   @Input() data: TableData;
+  private primaryKeyColumn: string;
 
   constructor() { }
+
+  setAsPrimaryKey(column): void {
+    this.primaryKeyColumn = column;
+  }
 
   sortBy(column: string, sortOrder: number): (a: any, b: any) => number {
     return (a: any, b: any) => (a[column] < b[column]) ? (-1 * sortOrder) : (a[column] > b[column]) ? sortOrder : 0;
