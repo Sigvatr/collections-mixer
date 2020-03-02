@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { TableData } from 'src/app/models/table.data';
 
 
@@ -10,12 +10,15 @@ import { TableData } from 'src/app/models/table.data';
 export class TableComponent {
 
   @Input() data: TableData;
+  @Output() primaryKeyColumnSet: EventEmitter<string> = new EventEmitter<string>();
+
   private primaryKeyColumn: string;
 
   constructor() { }
 
-  setAsPrimaryKey(column): void {
+  setAsPrimaryKey(column: string): void {
     this.primaryKeyColumn = column;
+    this.primaryKeyColumnSet.emit(this.primaryKeyColumn);
   }
 
   sortBy(column: string, sortOrder: number): (a: any, b: any) => number {

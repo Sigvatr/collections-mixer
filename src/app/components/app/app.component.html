@@ -1,7 +1,7 @@
 <h1>Collections mixer</h1>
 
-<app-collection-wrapper (collectionSet)="collectionASet($event)"></app-collection-wrapper>
-<app-collection-wrapper (collectionSet)="collectionBSet($event)"></app-collection-wrapper>
+<app-collection-wrapper (collectionSet)="collectionASet($event)" (primaryKeyColumnSet)="collectionAPrimaryKeyColumnSet($event)"></app-collection-wrapper>
+<app-collection-wrapper (collectionSet)="collectionBSet($event)" (primaryKeyColumnSet)="collectionBPrimaryKeyColumnSet($event)"></app-collection-wrapper>
 
 <div *ngIf="areBothCollectionSet()">
     <app-choose-operation

@@ -40,6 +40,14 @@ export class AppComponent {
     return this.collections[AppComponent.SECOND_COLLECTION].columns;
   }
 
+  collectionAPrimaryKeyColumnSet(columnName: string): void {
+    console.log('A', columnName);
+  }
+
+  collectionBPrimaryKeyColumnSet(columnName: string): void {
+    console.log('B', columnName);
+  }
+
   areBothCollectionSet() {
     return this.isCollectionSet(AppComponent.FIRST_COLLECTION) && this.isCollectionSet(AppComponent.SECOND_COLLECTION);
   }

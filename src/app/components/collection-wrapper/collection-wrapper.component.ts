@@ -14,6 +14,7 @@ export class CollectionWrapperComponent implements OnInit {
   private mode: string;
   private _rawJSON: string = null;
 
+
   @Input() set rawJSON(value: string) {
     this.collection = null;
     this._rawJSON = value;
@@ -28,6 +29,7 @@ export class CollectionWrapperComponent implements OnInit {
 
   @Input() collection: TableData;
   @Output() collectionSet: EventEmitter<TableData> = new EventEmitter<TableData>();
+  @Output() primaryKeyColumnSet: EventEmitter<string> = new EventEmitter<string>();
 
   constructor(
     private parserService: ParserService
