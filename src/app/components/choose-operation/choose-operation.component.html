@@ -1,45 +1,37 @@
-<app-error-message [value]="message"></app-error-message>
-<p>Column from collection A: <app-choose-column [(selectedColumn)]="firstColumnSelection" [columns]="columnsForFirstCollection" (change)="onSelectChange()"></app-choose-column></p>
-<p>
-    <svg class="operation-type-button" (click)="chooseOperation(Operation.InnerJoin)"
-        [class.selected]="selectedType == Operation.InnerJoin">
-        <title>Common part of both collection (in SQL is inner join)</title>
-        <circle cx="57" cy="50" r="40" class="not-included-in-result" />
-        <circle cx="95" cy="50" r="40" class="not-included-in-result" />
-        <path class="included-in-result"
-            d="M 74.548448,82.999646 C 72.401745,81.735522 68.487203,78.562836 66.810085,76.727801 52.983282,61.599074 52.553154,39.81079 65.778011,24.447655 68.009467,21.855402 71.680096,18.725588 74.42918,17.07111 l 1.671703,-1.006079 2.628723,1.747868 c 3.146993,2.092471 7.76785,6.600348 9.945535,9.702367 3.049701,4.344166 5.344951,9.72954 6.512648,15.280697 0.748041,3.556142 0.736317,10.842974 -0.02337,14.531644 -2.096854,10.181178 -8.15651,19.323841 -16.476999,24.860104 -1.369177,0.91102 -2.541806,1.654102 -2.605841,1.651292 -0.06404,-0.0027 -0.75394,-0.38052 -1.533122,-0.839357 z" />
-        <text x="3.3898304" y="33.898304">A</text>
-        <text x="121.18645" y="94.067795">B</text>
-    </svg>
+<svg class="operation-type-button" (click)="chooseOperation(Operation.InnerJoin)"
+    [class.selected]="selectedType == Operation.InnerJoin">
+    <title>Common part of both collection (in SQL is inner join)</title>
+    <circle cx="57" cy="50" r="40" class="not-included-in-result" />
+    <circle cx="95" cy="50" r="40" class="not-included-in-result" />
+    <path class="included-in-result"
+        d="M 74.548448,82.999646 C 72.401745,81.735522 68.487203,78.562836 66.810085,76.727801 52.983282,61.599074 52.553154,39.81079 65.778011,24.447655 68.009467,21.855402 71.680096,18.725588 74.42918,17.07111 l 1.671703,-1.006079 2.628723,1.747868 c 3.146993,2.092471 7.76785,6.600348 9.945535,9.702367 3.049701,4.344166 5.344951,9.72954 6.512648,15.280697 0.748041,3.556142 0.736317,10.842974 -0.02337,14.531644 -2.096854,10.181178 -8.15651,19.323841 -16.476999,24.860104 -1.369177,0.91102 -2.541806,1.654102 -2.605841,1.651292 -0.06404,-0.0027 -0.75394,-0.38052 -1.533122,-0.839357 z" />
+    <text x="3.3898304" y="33.898304">A</text>
+    <text x="121.18645" y="94.067795">B</text>
+</svg>
 
-    <svg class="operation-type-button" (click)="chooseOperation(Operation.LeftJoin)"
-        [class.selected]="selectedType == Operation.LeftJoin">
-        <title>All element from first collection with matching element from other (in SQL it is left join)</title>
-        <circle cx="57" cy="50" r="40" class="included-in-result" />
-        <circle cx="95" cy="50" r="40" class="not-included-in-result" />
-        <text x="3.3898304" y="33.898304">A</text>
-        <text x="121.18645" y="94.067795">B</text>
-    </svg>
+<svg class="operation-type-button" (click)="chooseOperation(Operation.LeftJoin)"
+    [class.selected]="selectedType == Operation.LeftJoin">
+    <title>All element from first collection with matching element from other (in SQL it is left join)</title>
+    <circle cx="57" cy="50" r="40" class="included-in-result" />
+    <circle cx="95" cy="50" r="40" class="not-included-in-result" />
+    <text x="3.3898304" y="33.898304">A</text>
+    <text x="121.18645" y="94.067795">B</text>
+</svg>
 
-    <svg class="operation-type-button" (click)="chooseOperation(Operation.RightJoin)"
-        [class.selected]="selectedType == Operation.RightJoin">
-        <title>All element from second collection with matching element from first one (in SQL it is right join)</title>
-        <circle cx="57" cy="50" r="40" class="not-included-in-result" />
-        <circle cx="95" cy="50" r="40" class="included-in-result" />
-        <text x="3.3898304" y="33.898304">A</text>
-        <text x="121.18645" y="94.067795">B</text>
-    </svg>
+<svg class="operation-type-button" (click)="chooseOperation(Operation.RightJoin)"
+    [class.selected]="selectedType == Operation.RightJoin">
+    <title>All element from second collection with matching element from first one (in SQL it is right join)</title>
+    <circle cx="57" cy="50" r="40" class="not-included-in-result" />
+    <circle cx="95" cy="50" r="40" class="included-in-result" />
+    <text x="3.3898304" y="33.898304">A</text>
+    <text x="121.18645" y="94.067795">B</text>
+</svg>
 
-    <svg class="operation-type-button" (click)="chooseOperation(Operation.FullOtherJoin)"
-        [class.selected]="selectedType == Operation.FullOtherJoin">
-        <title>All elements from both collections (in SQL it is full outher join)</title>
-        <circle cx="57" cy="50" r="40" class="included-in-result" />
-        <circle cx="95" cy="50" r="40" class="included-in-result" />
-        <text x="3.3898304" y="33.898304">A</text>
-        <text x="121.18645" y="94.067795">B</text>
-    </svg>
-</p>
-<p>
-    Column from collection B: <app-choose-column [(selectedColumn)]="secondColumnSelection" [columns]="columnsForFirstCollection" (change)="onSelectChange()"></app-choose-column>
-    <button (click)="onRunClick()">Run</button>
-</p>
+<svg class="operation-type-button" (click)="chooseOperation(Operation.FullOtherJoin)"
+    [class.selected]="selectedType == Operation.FullOtherJoin">
+    <title>All elements from both collections (in SQL it is full outher join)</title>
+    <circle cx="57" cy="50" r="40" class="included-in-result" />
+    <circle cx="95" cy="50" r="40" class="included-in-result" />
+    <text x="3.3898304" y="33.898304">A</text>
+    <text x="121.18645" y="94.067795">B</text>
+</svg>

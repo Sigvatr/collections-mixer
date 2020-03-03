@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { JoinService } from '../../services/join.service';
-import { OperationMetadata } from '../../models/operation-metadata';
 import { Operation } from '../../models/operation.enum';
 import { ParserService } from '../../services/parser.service';
 import { TableData } from 'src/app/models/table.data';
@@ -16,6 +15,7 @@ export class AppComponent {
   public static readonly SECOND_COLLECTION: string = 'b';
 
   private collections: { [index: string]: TableData; } = {};
+  private primaryKeys: { [index: string]: string } = {};
   private resultCollectionAsJSON: string | null = null;
 
   public constructor(
@@ -41,21 +41,22 @@ export class AppComponent {
   }
 
   collectionAPrimaryKeyColumnSet(columnName: string): void {
-    console.log('A', columnName);
+    this.primaryKeys[AppComponent.FIRST_COLLECTION] = columnName;
   }
 
   collectionBPrimaryKeyColumnSet(columnName: string): void {
-    console.log('B', columnName);
+    this.primaryKeys[AppComponent.SECOND_COLLECTION] = columnName;
   }
 
   areBothCollectionSet() {
     return this.isCollectionSet(AppComponent.FIRST_COLLECTION) && this.isCollectionSet(AppComponent.SECOND_COLLECTION);
   }
 
-  onOperationChoose($event: OperationMetadata) {
+  onOperationChoose(operation: Operation) {
     try {
       let mixerFunction = null;
-      switch (+$event.operation) {
+
+      switch (operation) {
         case Operation.InnerJoin:
           mixerFunction = this.joinService.innerJoin;
           break;
@@ -73,17 +74,17 @@ export class AppComponent {
           break;
 
         default:
-          throw new Error(`Unknown option: ${$event.operation}.`);
+          throw new Error(`Unknown option: ${operation}.`);
       }
 
       this.resultCollectionAsJSON = this.serviceService.fromObjectToJSON(
-        mixerFunction(
-          this.collections[AppComponent.FIRST_COLLECTION].data,
-          this.collections[AppComponent.SECOND_COLLECTION].data,
-          $event.firstColumn,
-          $event.secondColumn
-        )
-      );
+          mixerFunction(
+              this.collections[AppComponent.FIRST_COLLECTION].data,
+              this.collections[AppComponent.SECOND_COLLECTION].data,
+              this.primaryKeys[AppComponent.FIRST_COLLECTION],
+              this.primaryKeys[AppComponent.SECOND_COLLECTION]
+            )
+        );
     }
     catch (err) {
       this.resultCollectionAsJSON = null;

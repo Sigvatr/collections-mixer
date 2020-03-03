@@ -4,11 +4,7 @@
 <app-collection-wrapper (collectionSet)="collectionBSet($event)" (primaryKeyColumnSet)="collectionBPrimaryKeyColumnSet($event)"></app-collection-wrapper>
 
 <div *ngIf="areBothCollectionSet()">
-    <app-choose-operation
-        [columnsForFirstCollection]="aCollectionColumns()"
-        [columnsForSecondCollection]="bCollectionColumns()"
-        (operationChoose)="onOperationChoose($event)">
-    </app-choose-operation>
+    <app-choose-operation (operationChoose)="onOperationChoose($event)"></app-choose-operation>
 </div>
 
 <app-collection-wrapper *ngIf="resultCollectionAsJSON" [rawJSON]="resultCollectionAsJSON">
