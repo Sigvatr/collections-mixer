@@ -48,11 +48,14 @@ export class AppComponent {
     this.primaryKeys[AppComponent.SECOND_COLLECTION] = columnName;
   }
 
-  areBothCollectionSet() {
-    return this.isCollectionSet(AppComponent.FIRST_COLLECTION) && this.isCollectionSet(AppComponent.SECOND_COLLECTION);
+  areBothCollectionSet(): boolean {
+    return this.isCollectionSet(AppComponent.FIRST_COLLECTION)
+      && this.isCollectionSet(AppComponent.SECOND_COLLECTION)
+      && this.isPrimaryKeySet(AppComponent.FIRST_COLLECTION)
+      && this.isPrimaryKeySet(AppComponent.SECOND_COLLECTION);
   }
 
-  onOperationChoose(operation: Operation) {
+  onOperationChoose(operation: Operation): void {
     try {
       let mixerFunction = null;
 
@@ -92,12 +95,17 @@ export class AppComponent {
     }
   }
 
-  private isCollectionSet(name: string) {
+  private isCollectionSet(name: string): boolean {
     return this.collections.hasOwnProperty(name)
       && this.collections[name].data != null;
   }
 
-  private collectionSet(name: string, $event: TableData) {
+  private isPrimaryKeySet(name: string): boolean {
+    return this.primaryKeys.hasOwnProperty(name)
+      && this.primaryKeys[name] != null;
+  }
+
+  private collectionSet(name: string, $event: TableData): void {
     this.collections[name] = $event;
     this.resultCollectionAsJSON = null;
   }
