@@ -8,7 +8,8 @@
                     <span *ngIf="!data.order.asc">&#9660;</span>
                 </span>
                 <span (click)="sortByColumn(column)">{{ column }}</span>
-                <button (click)="setAsPrimaryKey(column)" *ngIf="!readonly && primaryKeyColumn != column">Set as primary key</button>
+                <button (click)="setAsPrimaryKey(column)" *ngIf="!readonly && primaryKeyColumn != column">Set as primary
+                    key</button>
                 <span class="note" *ngIf="!readonly && primaryKeyColumn == column">Primary key</span>
             </th>
         </tr>
@@ -21,6 +22,9 @@
             <td *ngFor="let column of data.columns" [class.empty]="!datum.hasOwnProperty(column)">
                 {{ datum.hasOwnProperty(column) ? datum[column] : 'null' }}
             </td>
+        </tr>
+        <tr *ngIf="!data.data || data.data.length == 0">
+            <td>The collection is empty.</td>
         </tr>
     </tbody>
 </table>
