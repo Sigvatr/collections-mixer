@@ -28,6 +28,7 @@ export class CollectionWrapperComponent implements OnInit {
   }
 
   @Input() collection: TableData;
+  @Input() readonly: boolean = false;
   @Output() collectionSet: EventEmitter<TableData> = new EventEmitter<TableData>();
   @Output() primaryKeyColumnSet: EventEmitter<string> = new EventEmitter<string>();
 

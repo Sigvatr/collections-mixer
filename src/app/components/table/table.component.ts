@@ -9,6 +9,7 @@ import { TableData } from 'src/app/models/table.data';
 })
 export class TableComponent {
 
+  @Input() readonly: boolean = false;
   @Input() data: TableData;
   @Output() primaryKeyColumnSet: EventEmitter<string> = new EventEmitter<string>();
 

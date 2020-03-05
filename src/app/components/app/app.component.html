@@ -1,11 +1,22 @@
 <h1>Collections mixer</h1>
 
-<app-collection-wrapper (collectionSet)="collectionASet($event)" (primaryKeyColumnSet)="collectionAPrimaryKeyColumnSet($event)"></app-collection-wrapper>
-<app-collection-wrapper (collectionSet)="collectionBSet($event)" (primaryKeyColumnSet)="collectionBPrimaryKeyColumnSet($event)"></app-collection-wrapper>
+<app-collection-wrapper
+    (collectionSet)="onCollectionASet($event)"
+    (primaryKeyColumnSet)="onCollectionAPrimaryKeyColumnSet($event)"></app-collection-wrapper>
+<app-collection-wrapper
+    (collectionSet)="onCollectionBSet($event)"
+    (primaryKeyColumnSet)="onCollectionBPrimaryKeyColumnSet($event)"></app-collection-wrapper>
 
-<div *ngIf="areBothCollectionSet()">
+<ng-content *ngIf="areBothCollectionSet() then collectionSet else collectionNotSet"></ng-content>
+<ng-template #collectionSet>
     <app-choose-operation (operationChoose)="onOperationChoose($event)"></app-choose-operation>
-</div>
+</ng-template>
+<ng-template #collectionNotSet>
+    <p>Please fill both tables and set their primary keys</p>    
+</ng-template>
 
-<app-collection-wrapper *ngIf="resultCollectionAsJSON" [rawJSON]="resultCollectionAsJSON" >
+<app-collection-wrapper
+    *ngIf="resultCollectionAsJSON"
+    [rawJSON]="resultCollectionAsJSON"
+    [readonly]="true">
 </app-collection-wrapper>

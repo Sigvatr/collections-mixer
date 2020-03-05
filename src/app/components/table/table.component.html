@@ -8,8 +8,8 @@
                     <span *ngIf="!data.order.asc">&#9660;</span>
                 </span>
                 <span (click)="sortByColumn(column)">{{ column }}</span>
-                <button (click)="setAsPrimaryKey(column)" *ngIf="primaryKeyColumn != column">Set as primary key</button>
-                <span class="note" *ngIf="primaryKeyColumn == column">Primary key</span>
+                <button (click)="setAsPrimaryKey(column)" *ngIf="!readonly && primaryKeyColumn != column">Set as primary key</button>
+                <span class="note" *ngIf="!readonly && primaryKeyColumn == column">Primary key</span>
             </th>
         </tr>
     </thead>
