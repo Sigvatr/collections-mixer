@@ -12,10 +12,10 @@ import { TableData } from 'src/app/models/table.data';
 export class AppComponent {
   public static readonly FIRST_COLLECTION: string = 'a';
   public static readonly SECOND_COLLECTION: string = 'b';
+  public resultCollectionAsJSON: string | null = null;
 
   private collections: { [index: string]: TableData; } = {};
   private primaryKeys: { [index: string]: string } = {};
-  private resultCollectionAsJSON: string | null = null;
   private operation: Operation | null = null;
 
   public constructor(
@@ -24,29 +24,36 @@ export class AppComponent {
     ) {
   }
 
-  private onCollectionASet($event: TableData): void {
+  public onCollectionASet($event: TableData): void {
     this.onCollectionSet(AppComponent.FIRST_COLLECTION, $event);
   }
 
-  private onCollectionBSet($event: TableData): void {
+  public onCollectionBSet($event: TableData): void {
     this.onCollectionSet(AppComponent.SECOND_COLLECTION, $event);
   }
 
-  private onCollectionAPrimaryKeyColumnSet(columnName: string): void {
+  public onCollectionAPrimaryKeyColumnSet(columnName: string): void {
     this.onCollectionPrimaryKeyColumnSet(AppComponent.FIRST_COLLECTION, columnName);
   }
 
-  private onCollectionBPrimaryKeyColumnSet(columnName: string): void {
+  public onCollectionBPrimaryKeyColumnSet(columnName: string): void {
     this.onCollectionPrimaryKeyColumnSet(AppComponent.SECOND_COLLECTION, columnName);
+  }
+
+  public onOperationChoose(operation: Operation): void {
+    this.operation = operation;
+    this.runCalculationIfPossible();
+  }
+
+  public areBothCollectionSet(): boolean {
+    return this.isCollectionSet(AppComponent.FIRST_COLLECTION)
+      && this.isCollectionSet(AppComponent.SECOND_COLLECTION)
+      && this.isPrimaryKeySet(AppComponent.FIRST_COLLECTION)
+      && this.isPrimaryKeySet(AppComponent.SECOND_COLLECTION);
   }
 
   private onCollectionPrimaryKeyColumnSet(collectionName: string, columnName: string): void {
     this.primaryKeys[collectionName] = columnName;
-    this.runCalculationIfPossible();
-  }
-
-  private onOperationChoose(operation: Operation): void {
-    this.operation = operation;
     this.runCalculationIfPossible();
   }
 
@@ -55,20 +62,12 @@ export class AppComponent {
     this.runCalculationIfPossible();
   }
 
-  private areBothCollectionSet(): boolean {
-    return this.isCollectionSet(AppComponent.FIRST_COLLECTION)
-      && this.isCollectionSet(AppComponent.SECOND_COLLECTION)
-      && this.isPrimaryKeySet(AppComponent.FIRST_COLLECTION)
-      && this.isPrimaryKeySet(AppComponent.SECOND_COLLECTION);
-  }
-
   private isOperationSet(): boolean {
     return !!this.operation;
   }
 
   private runCalculationIfPossible(): void {
-    if (this.isOperationSet() && this.areBothCollectionSet())
-    {
+    if (this.isOperationSet() && this.areBothCollectionSet()) {
       this.runCalculation();
     }
   }
@@ -99,13 +98,13 @@ export class AppComponent {
       }
 
       this.resultCollectionAsJSON = this.serviceService.fromObjectToJSON(
-          mixerFunction(
-              this.collections[AppComponent.FIRST_COLLECTION].data,
-              this.collections[AppComponent.SECOND_COLLECTION].data,
-              this.primaryKeys[AppComponent.FIRST_COLLECTION],
-              this.primaryKeys[AppComponent.SECOND_COLLECTION]
-            )
-        );
+        mixerFunction(
+          this.collections[AppComponent.FIRST_COLLECTION].data,
+          this.collections[AppComponent.SECOND_COLLECTION].data,
+          this.primaryKeys[AppComponent.FIRST_COLLECTION],
+          this.primaryKeys[AppComponent.SECOND_COLLECTION]
+        )
+      );
     }
     catch (err) {
       this.resultCollectionAsJSON = null;

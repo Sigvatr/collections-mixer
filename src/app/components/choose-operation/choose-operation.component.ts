@@ -2,22 +2,22 @@ import { Component, Output } from '@angular/core';
 import { EventEmitter } from '@angular/core';
 import { Operation } from '../../models/operation.enum';
 
-
 @Component({
   selector: 'app-choose-operation',
   templateUrl: './choose-operation.component.html',
   styleUrls: ['./choose-operation.component.scss']
 })
 export class ChooseOperationComponent {
-  private readonly Operation: any = Operation;
+  public readonly Operation: any = Operation;
+  public selectedType: Operation|null = null;
 
-  private selectedType: Operation|null = null;
+  @Output()
+  public operationChoose: EventEmitter<Operation> = new EventEmitter();
 
-  @Output() operationChoose: EventEmitter<Operation> = new EventEmitter();
+  public constructor() {
+  }
 
-  constructor() { }
-
-  chooseOperation(operation: Operation): void {
+  public chooseOperation(operation: Operation): void {
     this.selectedType = operation;
     this.operationChoose.emit(this.selectedType);
   }

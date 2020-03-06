@@ -13,7 +13,7 @@ export class TableComponent {
   @Input() data: TableData;
   @Output() primaryKeyColumnSet: EventEmitter<string> = new EventEmitter<string>();
 
-  private primaryKeyColumn: string;
+  public primaryKeyColumn: string;
 
   constructor() { }
 

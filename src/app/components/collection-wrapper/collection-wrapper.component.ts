@@ -1,8 +1,7 @@
-import { Component, OnInit, Output, Input, EventEmitter, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
 import { isArray } from 'util';
 import { ParserService } from '../../services/parser.service';
 import { TableData } from 'src/app/models/table.data';
-
 
 @Component({
   selector: 'app-collection-wrapper',
@@ -10,12 +9,12 @@ import { TableData } from 'src/app/models/table.data';
   styleUrls: ['./collection-wrapper.component.scss']
 })
 export class CollectionWrapperComponent implements OnInit {
-  private message: string;
-  private mode: string;
+  public message: string;
+  public mode: string;
   private _rawJSON: string = null;
 
-
-  @Input() set rawJSON(value: string) {
+  @Input()
+  public set rawJSON(value: string) {
     this.collection = null;
     this._rawJSON = value;
     if (this._rawJSON) {
@@ -23,22 +22,50 @@ export class CollectionWrapperComponent implements OnInit {
     }
   }
 
-  get rawJSON() {
+  public get rawJSON() {
     return this._rawJSON;
   }
 
-  @Input() collection: TableData;
-  @Input() readonly: boolean = false;
-  @Output() collectionSet: EventEmitter<TableData> = new EventEmitter<TableData>();
-  @Output() primaryKeyColumnSet: EventEmitter<string> = new EventEmitter<string>();
+  @Input() public collection: TableData;
+  @Input() public readonly: boolean = false;
+  @Output() public collectionSet: EventEmitter<TableData> = new EventEmitter<TableData>();
+  @Output() public primaryKeyColumnSet: EventEmitter<string> = new EventEmitter<string>();
 
-  constructor(
-    private parserService: ParserService
-  ) {
+  public constructor(private parserService: ParserService) {
   }
 
-  ngOnInit() {
+  public ngOnInit() {
     this.mode = this.rawJSON ? 'table' : 'edit';
+  }
+
+  public onParseCollectionClick() {
+    this.message = null;
+    try {
+      this.collection = this.buildCollection(this.rawJSON);
+      this.mode = 'table';
+      this.collectionSet.emit(this.collection);
+    }
+    catch (exception) {
+      this.message = exception.message;
+      this.mode = 'edit';
+    }
+  }
+
+  public editData() {
+    this._rawJSON = this.parserService.fromObjectToJSON(this.collection.data);
+    this.mode = 'edit';
+  }
+
+  public showAsCSV() {
+    this.mode = 'csv';
+  }
+
+  public closeCSVView() {
+    this.mode = 'table';
+  }
+
+  public csv() {
+    return this.parserService.fromObjectToCSV(this.collection);
   }
 
   private buildCollection(rawJSON: string): TableData {
@@ -52,35 +79,5 @@ export class CollectionWrapperComponent implements OnInit {
       columns: Array.from(this.parserService.findAllColumns(parsedData)),
       order: null
     };
-  }
-
-  onParseCollectionClick() {
-    this.message = null;
-    try {
-      this.collection = this.buildCollection(this.rawJSON);
-      this.mode = 'table';
-      this.collectionSet.emit(this.collection);
-    }
-    catch (exception) {
-      this.message = exception.message;
-      this.mode = 'edit';
-    }
-  }
-
-  editData() {
-    this._rawJSON = this.parserService.fromObjectToJSON(this.collection.data);
-    this.mode = 'edit';
-  }
-
-  showAsCSV() {
-    this.mode = 'csv';
-  }
-
-  closeCSVView() {
-    this.mode = 'table';
-  }
-
-  csv() {
-    return this.parserService.fromObjectToCSV(this.collection);
   }
 }
