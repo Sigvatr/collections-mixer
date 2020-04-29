@@ -32,7 +32,7 @@ export class ParserService {
           collection.data
             .map(
                 line => collection.columns
-                  .map(column => line[column] || '')
+                  .map(column => (line[column] === false) ? 'false' : (line[column] || ''))
                   .map(item => ((typeof item === 'string' || item instanceof String) && (item.indexOf(',') > -1 || item.indexOf('"') > -1))
                     ? `"${item.replace(/"/g, '""')}"`
                     : item

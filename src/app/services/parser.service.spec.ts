@@ -81,4 +81,30 @@ describe('ParserService', () => {
     expect(expected).toEqual(result);
   });
 
+  it('should convert data including "false" value into CSV', () => {
+    // Assign
+    const service: ParserService = TestBed.get(ParserService);
+    const testCollection: TableData = {
+      data: [
+        { 'a': 'A', 'b': false, 'c': 'C' },
+        { 'a': false, 'b': false, 'c': false },
+        { 'a': 'A', 'b': true, 'c': true },
+
+      ],
+      columns: ['a', 'b', 'c'],
+      order: null
+    };
+
+    const expected = `a,b,c
+A,false,C
+false,false,false
+A,true,true`;
+
+    // Act
+    const result = service.fromObjectToCSV(testCollection);
+
+    // Assert
+    expect(expected).toEqual(result);
+  });
+
 });
